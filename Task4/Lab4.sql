@@ -66,11 +66,24 @@ VALUES (id_id,name_table1, name_column1, next_id);
 END;
 $Hp$ LANGUAGE plpgsql;
 
+CREATE TABLE IF NOT EXISTS test1 (id INT);
+SELECT Hp('test1', 'id');
+SELECT Hp('test1', 'id');
+select * from spec;
+INSERT INTO test1 (id) VALUES (10);
+select * from spec;
+UPDATE test1 SET id = 15 WHERE id = 10;
+select * from spec;
+CREATE TABLE IF NOT EXISTS test2 (id INT);
 
+SELECT Hp('test2', 'id');
 
+select * from spec;
 
+INSERT INTO test2 (id) VALUES (50);
+select * from spec;
 
 DROP TABLE IF EXISTS test1, test2;
-DROP FUNCTION IF EXISTS get_next_value(VARCHAR, VARCHAR);
+DROP FUNCTION IF EXISTS Hp(VARCHAR, VARCHAR);
 DROP FUNCTION IF EXISTS update_max_value();
 DROP TABLE IF EXISTS spec;
