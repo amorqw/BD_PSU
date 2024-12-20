@@ -1,6 +1,3 @@
-DROP TABLE IF EXISTS spec;
-DROP TABLE IF EXISTS test1, test2;
-
 CREATE TABLE if not exists spec(
     id int,
     name_table VARCHAR NOT NULL,
@@ -16,10 +13,8 @@ RETURNS TRIGGER AS $$
 DECLARE
     v_max INT;
 BEGIN
-    -- Получаем максимальное значение в отслеживаемой таблице и столбце
     EXECUTE format('SELECT COALESCE(MAX(%I), 0) FROM %I', TG_ARGV[1], TG_ARGV[0]) INTO v_max;
 
-    -- Если максимальное значение больше текущего, обновляем
     IF v_max > (SELECT max_value FROM spec
                 WHERE name_table = TG_ARGV[0] AND name_column = TG_ARGV[1]) THEN
         UPDATE spec
